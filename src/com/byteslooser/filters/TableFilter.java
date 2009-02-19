@@ -103,8 +103,16 @@ public class TableFilter extends AndFilter {
      * implement the {@link ITableModelFilter} interface, one is automatically created
      */
     public void setTable(JTable table) {
+    	if (this.table!=null){
+    		TableModel tm = this.table.getModel();
+    		if (tm instanceof ITableModelFilter){
+    			this.table.setModel(((ITableModelFilter) tm).getModel());
+    		}
+    	}
         this.table = table;
-        setModel(table.getModel());
+        if (table!=null){
+        	setModel(table.getModel());
+        }
     }
 
     /**

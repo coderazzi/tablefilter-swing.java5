@@ -30,9 +30,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,6 +49,7 @@ import javax.swing.table.JTableHeader;
 import com.byteslooser.filters.gui.ITableFilterEditor;
 import com.byteslooser.filters.gui.ITableFilterTextBasedEditor;
 import com.byteslooser.filters.gui.TableFilterHeader;
+import com.byteslooser.filters.gui.TableFilterHeader.EditorMode;
 import com.byteslooser.filters.gui.editors.ChoiceFilterEditor;
 import com.byteslooser.filters.gui.editors.TableChoiceFilterEditor;
 import com.byteslooser.filters.gui_tests.TestData.ExamInformation;
@@ -76,6 +75,7 @@ public class AppTestMain extends JFrame {
     TestTableModel tableModel;
     TableFilterHeader filterHeader;
     JComboBox modeComboBox;
+    JComboBox positionComboBox;
     JCheckBox filterEnabler;
     JCheckBox caseIgnorer;
     JButton changeTableButton;
@@ -87,30 +87,33 @@ public class AppTestMain extends JFrame {
 
     public AppTestMain() {
         super(Messages.getString("Test.Title")); //$NON-NLS-1$
-        tableModel = createModel();
+        tableModel = TestTableModel.createTestTableModel();
         createGui();
         initGui();
         setTableRenderers();
         setupListeners();
+        modeComboBox.setSelectedItem(EditorMode.CHOICE);
     }
 
     private void createGui() {
         JPanel main = new JPanel(new BorderLayout());
-        JPanel tableAndFilterPanel = new JPanel(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane();
-        JPanel south = new JPanel(new BorderLayout(5, 0));
+        JPanel south = new JPanel(new BorderLayout(30, 0));
         JPanel southLeft = new JPanel(new GridLayout(2, 2, 10, 16));
-        JPanel southRight = new JPanel(new GridLayout(2, 3, 40, 16));
+        JPanel modePanel = new JPanel(new BorderLayout(2, 0));
+        JPanel positionPanel = new JPanel(new BorderLayout(2, 0));
+        JPanel southRight = new JPanel(new GridLayout(2, 3, 20, 16));
 
-        main.add(tableAndFilterPanel, BorderLayout.CENTER);
+        main.add(scrollPane, BorderLayout.CENTER);
         main.add(south, BorderLayout.SOUTH);
         south.add(southLeft, BorderLayout.WEST);
         south.add(southRight, BorderLayout.EAST);
 
         table = new JTable(tableModel);
         scrollPane.setViewportView(table);
-        filterHeader = new TableFilterHeader();
+        filterHeader = new TableFilterHeader(table);
         modeComboBox = new JComboBox();
+        positionComboBox = new JComboBox();
         filterEnabler = new JCheckBox(Messages.getString("Tests.Enable"), true);
         caseIgnorer = new JCheckBox(Messages.getString("Tests.IgnoreCase"), false);
         changeTableButton = new JButton(Messages.getString("Tests.ChangeTable"));
@@ -121,11 +124,13 @@ public class AppTestMain extends JFrame {
         removeButton = new JButton(Messages.getString("Tests.Remove"));
         south.setBorder(BorderFactory.createEmptyBorder(16, 40, 16, 40));
 
-        tableAndFilterPanel.add(scrollPane, BorderLayout.CENTER);
-        tableAndFilterPanel.add(filterHeader, BorderLayout.NORTH);
-
-        southLeft.add(new JLabel(Messages.getString("Tests.EditorsMode")));
-        southLeft.add(modeComboBox);
+        modePanel.add(new JLabel(Messages.getString("Tests.EditorsMode")), BorderLayout.WEST);
+        modePanel.add(modeComboBox, BorderLayout.EAST);
+        positionPanel.add(new JLabel(Messages.getString("Tests.EditorsPosition")), BorderLayout.WEST);
+        positionPanel.add(positionComboBox, BorderLayout.EAST);
+        
+        southLeft.add(modePanel);
+        southLeft.add(positionPanel);
         southLeft.add(filterEnabler);
         southLeft.add(caseIgnorer);
         southRight.add(addMaleButton);
@@ -142,8 +147,6 @@ public class AppTestMain extends JFrame {
         table.setModel(sorter);
 
 
-        filterHeader.setMode(TableFilterHeader.EditorMode.NULL);
-        filterHeader.setTable(table);
         filterHeader.setFont(table.getFont().deriveFont(10f));
 
         getContentPane().add(main);
@@ -229,6 +232,9 @@ public class AppTestMain extends JFrame {
     private void initGui() {
         modeComboBox.setModel(new DefaultComboBoxModel(TableFilterHeader.EditorMode.values()));
         modeComboBox.addItem(Messages.getString("Tests.MixedMode"));
+        modeComboBox.setSelectedItem(filterHeader.getMode());
+        positionComboBox.setModel(new DefaultComboBoxModel(TableFilterHeader.Position.values()));
+        positionComboBox.setSelectedItem(filterHeader.getPosition());
 
         FilterTextParser parser = (FilterTextParser) filterHeader.getTextParser();
 
@@ -279,6 +285,15 @@ public class AppTestMain extends JFrame {
                 }
             });
 
+        positionComboBox.addItemListener(new ItemListener() {
+            public void itemStateChanged(ItemEvent e) {
+
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    filterHeader.setPosition((TableFilterHeader.Position) e.getItem());
+                }
+            }
+        });
+
         filterEnabler.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     filterHeader.setEnabled(filterEnabler.isSelected());
@@ -306,7 +321,7 @@ public class AppTestMain extends JFrame {
         resetModelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     //>>//special difference with Java 6
-                    tableModel = createModel();
+                    tableModel = TestTableModel.createTestTableModel();
                     JTableHeader header = table.getTableHeader();
                     TableSorter sorter = new TableSorter(tableModel, header);
                     table.setModel(sorter);
@@ -340,7 +355,6 @@ public class AppTestMain extends JFrame {
             });
 
     }
-
 
     private void addTestData(boolean male) {
         TestData td = new TestData();
@@ -385,27 +399,14 @@ public class AppTestMain extends JFrame {
     }
 
 
-    TestTableModel createModel() {
-        TestData.resetRandomness();
-
-        List<TestData> ltd = new ArrayList<TestData>();
-
-        for (int i = 0; i < 1000; i++)
-            ltd.add(new TestData());
-
-        return new TestTableModel(ltd);
-    }
-
-
     public final static void main(String[] args) {
 
-        try {
-//                      UIManager.setLookAndFeel(
-//                          UIManager.getCrossPlatformLookAndFeelClassName());
-            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//			UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+//		} catch (Exception ex) {
+//			ex.printStackTrace();
+//		}
 
         AppTestMain frame = new AppTestMain();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
