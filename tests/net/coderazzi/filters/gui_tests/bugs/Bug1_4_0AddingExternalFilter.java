@@ -24,7 +24,6 @@ public class Bug1_4_0AddingExternalFilter extends JPanel{
 	AbstractObservableRowFilter addedFilter = new AbstractObservableRowFilter(){
 		@Override
 		public boolean include(Entry entry) {
-			System.out.println();
 			return -1!=entry.getStringValue(model.getColumn(TestTableModel.NAME)).indexOf('e');
 		}
 	};
