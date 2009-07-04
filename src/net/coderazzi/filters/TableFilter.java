@@ -179,8 +179,12 @@ public class TableFilter extends AndFilter {
      * Internal method to send without further checks a notification to the observers.
      */
     private boolean sendFilterUpdateNotification() {
-        getRowFilter(table.getModel()).setRowFilter(this);
-
+    	if (table!=null){
+	    	TableModel model = table.getModel();
+	    	if (model!=null){
+	    		getRowFilter(model).setRowFilter(this);
+	    	}
+    	}
         return false;
     }
 
