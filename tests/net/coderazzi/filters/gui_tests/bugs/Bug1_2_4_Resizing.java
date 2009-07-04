@@ -18,6 +18,8 @@ import net.coderazzi.filters.gui_tests.TestTableModel;
  */
 public class Bug1_2_4_Resizing extends JFrame{
 	
+	private static final long serialVersionUID = -2917018640052907357L;
+
 	Bug1_2_4_Resizing(){
 		super("Bug 1_2_4");
 		createGui();

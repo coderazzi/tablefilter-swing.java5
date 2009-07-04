@@ -43,7 +43,9 @@ import javax.swing.table.TableModel;
  */
 public class TableModelFilter extends AbstractTableModel implements ITableModelFilter {
 
-    /** Mapping from view rows to model rows */
+	private static final long serialVersionUID = 8464799419424149436L;
+
+	/** Mapping from view rows to model rows */
     private int[] rowsMapper = new int[0];
 
     /** Number of valid elements in rowsMapper */
