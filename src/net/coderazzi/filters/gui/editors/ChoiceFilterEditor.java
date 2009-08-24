@@ -73,7 +73,9 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
      * The object representing 'no filter', that is, it is the option to be selected for this editor
      * to perform no filtering.
      */
-    public static final String NO_FILTER = new String(" ");
+    public static final Object NO_FILTER = new Object(){
+    	public String toString() {return " ";}
+    };
 
 
     /**
@@ -158,9 +160,7 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
                     int index, boolean isSelected, boolean cellHasFocus) {
                     String val;
 
-                    if (value == NO_FILTER)
-                        val = (String) value;
-                    else if (value == null)
+                    if (value == null)
                         val = NULL_VALUE;
                     else {
                         val = value.toString();
