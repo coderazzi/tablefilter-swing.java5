@@ -18,10 +18,18 @@ public abstract class UserFilter extends AbstractObservableRowFilter{
 		setTableFilter(filter);
 	}
 	
+	/**
+	 * Sets the associated filter, enabling automatically this user filter
+	 */
 	public void setTableFilter(TableFilter filter){
+		setEnabled(false);
 		this.filter=filter;
+		setEnabled(true);
 	}
 	
+	/**
+	 * Sets the associated filter, enabling automatically this user filter
+	 */
 	public void setTableFilter(TableFilterHeader filterHeader){
 		setTableFilter(filterHeader.getTableFilter());
 	}

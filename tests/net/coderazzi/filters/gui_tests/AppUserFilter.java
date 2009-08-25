@@ -13,6 +13,7 @@ import javax.swing.JTable;
 import net.coderazzi.filters.AbstractObservableRowFilter;
 import net.coderazzi.filters.UserFilter;
 import net.coderazzi.filters.gui.TableFilterHeader;
+import net.coderazzi.filters.gui.TableFilterHeader.EditorMode;
 import net.coderazzi.filters.gui_tests.TestTableModel;
 
 /**
@@ -26,7 +27,7 @@ public class AppUserFilter extends JPanel{
 		super(new BorderLayout());
 		final TestTableModel model = TestTableModel.createTestTableModel();
 		JTable table = new JTable(model);
-		TableFilterHeader filterHeader = new TableFilterHeader(table);
+		TableFilterHeader filterHeader = new TableFilterHeader(table, EditorMode.CHOICE);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 		
 		final UserFilter userFilter = new UserFilter(filterHeader){
@@ -35,7 +36,7 @@ public class AppUserFilter extends JPanel{
 				return -1!=entry.getStringValue(model.getColumn(TestTableModel.NAME)).indexOf('e');
 			}
 		};
-		JCheckBox check = new JCheckBox("Filter out any row where the name does not contain a lower case 'e'");
+		JCheckBox check = new JCheckBox("Filter out any row where the name does not contain a lower case 'e'", true);
 		add(check, BorderLayout.SOUTH);
 		
 		check.addItemListener(new ItemListener() {			

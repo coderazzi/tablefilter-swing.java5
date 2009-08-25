@@ -40,7 +40,7 @@ public interface ITypeBuilder {
      * <p>The parser implementation can require that the returned object belong to specific class
      * hierarchies</p>
      *
-     * <p>If the implementation cannot build a meaningfull object out of the passed string, it can
+     * <p>If the implementation cannot build a meaningful object out of the passed string, it can
      * raise a (@link FilterTextParsingException} exception, or simply return null.</p>
      */
     Object parse(String text) throws FilterTextParsingException;
