@@ -1,8 +1,8 @@
 /**
- * Author:  Luis M Pena  ( dr.lu@coderazzi.net )
+ * Author:  Luis M Pena  ( sen@coderazzi.net )
  * License: MIT License
  *
- * Copyright (c) 2007 Luis M. Pena  -  dr.lu@coderazzi.net
+ * Copyright (c) 2007 Luis M. Pena  -  sen@coderazzi.net
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +99,7 @@ import net.coderazzi.filters.resources.Messages;
  * read its documentation to understand the requirements on the table and its model, and how it is
  * affected by this filter</p>
  *
- * @author  Luis M Pena - dr.lu@coderazzi.net
+ * @author  Luis M Pena - sen@coderazzi.net
  */
 public class TableFilterHeader extends JPanel {
 
@@ -122,7 +122,7 @@ public class TableFilterHeader extends JPanel {
      * <li>CHOICE: combobox where user can only select one of the provided expressions.</li>
      * </ul>
      *
-     * @author  Luis M Pena - dr.lu@coderazzi.net
+     * @author  Luis M Pena - sen@coderazzi.net
      */
     public enum EditorMode {
         NULL, SLIM, BASIC, CHOICE
@@ -137,7 +137,7 @@ public class TableFilterHeader extends JPanel {
      * <li>INLINE: the filter is placed below the table header, above the table's content.</li>
      * </ul>
      *
-     * @author  Luis M Pena - dr.lu@coderazzi.net
+     * @author  Luis M Pena - sen@coderazzi.net
      * @since 1.3
      */
     public enum Position {

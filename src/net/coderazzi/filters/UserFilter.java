@@ -4,7 +4,7 @@ import net.coderazzi.filters.gui.TableFilterHeader;
 
 /**
  * Commodity class to implement an added user filter. 
- * @author  Luis M Pena - dr.lu@coderazzi.net
+ * @author  Luis M Pena - sen@coderazzi.net
  */
 public abstract class UserFilter extends AbstractObservableRowFilter{
 	

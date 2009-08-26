@@ -21,7 +21,7 @@ import java.util.regex.PatternSyntaxException;
  * <p>It does not accept the usage of identifiers in the expression: the whole expression is
  * evaluated as a java regular expression.</p>
  *
- * @author  Luis M Pena - dr.lu@coderazzi.net
+ * @author  Luis M Pena - sen@coderazzi.net
  */
 public class REFilterTextParser extends RowFilter implements IFilterTextParser {
 

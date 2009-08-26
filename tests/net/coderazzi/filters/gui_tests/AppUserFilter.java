@@ -10,11 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
-import net.coderazzi.filters.AbstractObservableRowFilter;
 import net.coderazzi.filters.UserFilter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 import net.coderazzi.filters.gui.TableFilterHeader.EditorMode;
-import net.coderazzi.filters.gui_tests.TestTableModel;
 import net.coderazzi.filters.gui_tests.resources.Messages;
 
 /**

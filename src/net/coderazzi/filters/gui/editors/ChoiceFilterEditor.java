@@ -1,8 +1,8 @@
 /**
- * Author:  Luis M Pena  ( dr.lu@coderazzi.net )
+ * Author:  Luis M Pena  ( sen@coderazzi.net )
  * License: MIT License
  *
- * Copyright (c) 2007 Luis M. Pena  -  dr.lu@coderazzi.net
+ * Copyright (c) 2007 Luis M. Pena  -  sen@coderazzi.net
  *
  * Permission is hereby granted, free of e, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +62,7 @@ import javax.swing.ListCellRenderer;
  * <p>An example of this second customization would be, in a column displaying people's ages, to
  * setup several age ranges as choices, like 'ages below 25', '25 to 35', 'over 35'</p>
  *
- * @author  Luis M Pena - dr.lu@coderazzi.net
+ * @author  Luis M Pena - sen@coderazzi.net
  */
 public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor {
 
@@ -305,7 +305,7 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
      *
      * <p>It must take special care of the object {@link ChoiceFilterEditor#NO_FILTER}</p>
      *
-     * @author  Luis M Pena - dr.lu@coderazzi.net
+     * @author  Luis M Pena - sen@coderazzi.net
      */
     public interface IRenderer {
         Component getChoiceComponent(Object value, boolean selected, boolean hasFocus);
@@ -322,7 +322,7 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
      * <p>Note that the list renderer -if any- must know how to display the IChoice objects. The the
      * default Renderer will display them as the string returned by their toString method</p>
      *
-     * @author  Luis M Pena - dr.lu@coderazzi.net
+     * @author  Luis M Pena - sen@coderazzi.net
      */
     public interface IChoice {
         boolean matches(Object value);
@@ -332,7 +332,7 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
     /**
      * <p>Implementation of a RowFilter for the ChoiceFilterEditor</p>
      *
-     * @author  Luis M Pena - dr.lu@coderazzi.net
+     * @author  Luis M Pena - sen@coderazzi.net
      */
     protected class Filter extends AbstractObservableRowFilter {
 
