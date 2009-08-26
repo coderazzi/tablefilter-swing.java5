@@ -102,6 +102,16 @@ public class TableChoiceFilterEditor extends ChoiceFilterEditor {
 		}
 	};
 
+	private final static JTable ROGUE_TABLE = new JTable(){
+		
+		private static final long serialVersionUID = 1L;
+		
+		@Override
+		public boolean isCellEditable(int row, int column) {
+			return false;
+		}
+	};
+	
     /** Max number of elements to show as choices */
     private int maxShow = Integer.MAX_VALUE;
 
@@ -193,7 +203,7 @@ public class TableChoiceFilterEditor extends ChoiceFilterEditor {
                         return super.getListCellRendererComponent(list, value, index, isSelected,
                                 cellHasFocus);
 
-                    return renderer.getTableCellRendererComponent(table, value, isSelected,
+                    return renderer.getTableCellRendererComponent(ROGUE_TABLE, value, isSelected,
                             cellHasFocus, 1, filterPosition);
                 }
             });

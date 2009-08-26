@@ -15,6 +15,7 @@ import net.coderazzi.filters.UserFilter;
 import net.coderazzi.filters.gui.TableFilterHeader;
 import net.coderazzi.filters.gui.TableFilterHeader.EditorMode;
 import net.coderazzi.filters.gui_tests.TestTableModel;
+import net.coderazzi.filters.gui_tests.resources.Messages;
 
 /**
  * Adding new filters outside the TableHeader does not work (on release 1.4.0)
@@ -49,7 +50,7 @@ public class AppUserFilter extends JPanel{
 	
 	public static void main(String[] args) {
 		AppUserFilter testTableFilter = new AppUserFilter();
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame(Messages.getString("TestUserFilter.Title"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().add(testTableFilter);
 		frame.pack();
