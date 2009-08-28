@@ -51,7 +51,7 @@ public interface ITableFilterEditor {
     /**
      * <p>Performs an update of the filter.</p>
      *
-     * <p>Each editor defines its own semantics for this operation, but is always ensure that the
+     * <p>Each editor defines its own semantics for this operation, but is always ensured that the
      * current filter is propagated to any observers.</p>
      */
     public void updateFilter();
@@ -62,5 +62,31 @@ public interface ITableFilterEditor {
      * editor.
      */
     public void resetFilter();
+
+    /**
+     * <p>Sets the content of the filter.</p>
+     * <p>The content's type must conform to the type expected by the editor</p>
+     * @since version 2.0
+     */
+    public void setFilter(Object content);
+
+    /**
+     * <p>Returns the content of the filter.</p>
+     * <p>The content's type conforms to the type expected by the editor</p>
+     * @since version 2.0
+     */
+    public Object getFilter();
+
+    /**
+     * Adds a new observer to the editor
+     * @since version 2.0
+     */
+    public void addTableFilterObserver(ITableFilterEditorObserver observer);
+    
+    /**
+     * Removes an observer from the editor
+     * @since version 2.0
+     */
+    public void removeTableFilterObserver(ITableFilterEditorObserver observer);
 
 }

@@ -143,6 +143,13 @@ abstract class TextField implements IFilterObservable {
     }
 
     /**
+     * Returns the current parsing expression
+     */
+    public String getText(){
+    	return editor.getText();
+    }
+
+    /**
      * Sets the filter position (as associated to the RowFile.Entry index) associated to this editor
      */
     public void setFilterPosition(int filterPosition) {

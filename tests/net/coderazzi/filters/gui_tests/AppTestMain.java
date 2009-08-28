@@ -101,15 +101,16 @@ public class AppTestMain extends JFrame {
         JPanel main = new JPanel(new BorderLayout());
         JScrollPane scrollPane = new JScrollPane();
         JPanel south = new JPanel(new BorderLayout(30, 0));
-        JPanel southLeft = new JPanel(new GridLayout(2, 2, 10, 16));
+        JPanel southTop = new JPanel(new GridLayout(1, 3, 10, 0));
         JPanel modePanel = new JPanel(new BorderLayout(2, 0));
         JPanel positionPanel = new JPanel(new BorderLayout(2, 0));
-        JPanel southRight = new JPanel(new GridLayout(2, 3, 20, 16));
+        JPanel checksPanel = new JPanel(new BorderLayout(2, 0));
+        JPanel southBottom = new JPanel(new GridLayout(2, 3, 20, 16));
 
         main.add(scrollPane, BorderLayout.CENTER);
         main.add(south, BorderLayout.SOUTH);
-        south.add(southLeft, BorderLayout.WEST);
-        south.add(southRight, BorderLayout.EAST);
+        south.add(southTop, BorderLayout.NORTH);
+        south.add(southBottom, BorderLayout.SOUTH);
 
         table = new JTable(tableModel);
         scrollPane.setViewportView(table);
@@ -124,24 +125,25 @@ public class AppTestMain extends JFrame {
         addMaleButton = new JButton(Messages.getString("Tests.AddMale"));
         addFemaleButton = new JButton(Messages.getString("Tests.AddFemale"));
         removeButton = new JButton(Messages.getString("Tests.Remove"));
+        southTop.setBorder(BorderFactory.createEmptyBorder(0, 0, 16, 0));
         south.setBorder(BorderFactory.createEmptyBorder(16, 40, 16, 40));
 
         modePanel.add(new JLabel(Messages.getString("Tests.EditorsMode")), BorderLayout.WEST);
-        modePanel.add(modeComboBox, BorderLayout.EAST);
+        modePanel.add(modeComboBox, BorderLayout.CENTER);
         positionPanel.add(new JLabel(Messages.getString("Tests.EditorsPosition")), BorderLayout.WEST);
-        positionPanel.add(positionComboBox, BorderLayout.EAST);
+        positionPanel.add(positionComboBox, BorderLayout.CENTER);
+        checksPanel.add(filterEnabler, BorderLayout.WEST);
+        checksPanel.add(caseIgnorer, BorderLayout.EAST);
         
-        southLeft.add(modePanel);
-        southLeft.add(positionPanel);
-        southLeft.add(filterEnabler);
-        southLeft.add(caseIgnorer);
-        southRight.add(addMaleButton);
-        southRight.add(addFemaleButton);
-        southRight.add(removeButton);
-        southRight.add(changeTableButton);
-        southRight.add(resetFilterButton);
-        southRight.add(resetModelButton);
-
+        southTop.add(modePanel);
+        southTop.add(positionPanel);
+        southTop.add(checksPanel);
+        southBottom.add(addMaleButton);
+        southBottom.add(addFemaleButton);
+        southBottom.add(removeButton);
+        southBottom.add(changeTableButton);
+        southBottom.add(resetFilterButton);
+        southBottom.add(resetModelButton);
 
         //>>//special difference with Java 6
         JTableHeader header = table.getTableHeader();

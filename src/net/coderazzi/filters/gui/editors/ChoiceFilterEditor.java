@@ -29,6 +29,7 @@ import net.coderazzi.filters.AbstractObservableRowFilter;
 import net.coderazzi.filters.IFilterObservable;
 import net.coderazzi.filters.artifacts.RowFilter;
 import net.coderazzi.filters.gui.ITableFilterEditor;
+import net.coderazzi.filters.gui.ITableFilterEditorObserver;
 import net.coderazzi.filters.resources.Messages;
 
 import java.awt.Component;
@@ -115,6 +116,9 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
     /** The internal filter implementation */
     protected Filter filter;
 
+    /** Helper to handle the table filter observers **/
+    private ObserverHelper observerHelper;
+
     /**
      * Default constructor. It is yet needed to set, at least, the choices to show to the user
      */
@@ -141,8 +145,9 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
      */
     public ChoiceFilterEditor(int filterPosition, Object labelForOtherChoices, Object... choices) {
         filter = new Filter();
-        setFilterPosition(filterPosition);
+        observerHelper = new ObserverHelper(this);        
         setChoices(otherChoices, choices);
+        setFilterPosition(filterPosition);
         addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     filter.propagateFilterChange(false);
@@ -262,6 +267,28 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
         getModel().setSelectedItem(NO_FILTER);
         filter.propagateFilterChange(false);
     }
+    
+    /**
+     * <p>Returns the content of the filter, whose type will match the type 
+     * of the associated table's column, or be {@link ChoiceFilterEditor#NO_FILTER}</p>
+     * @see  ITableFilterEditor#getFilter()
+     */
+    public Object getFilter() {
+    	return getSelectedItem();
+    }
+    
+    /**
+     * <p>Sets the content of the filter, which must always be of the
+     * types of the associated table's column. To remove the filter, use
+     * as parameter {@link ChoiceFilterEditor#NO_FILTER}, 
+     * or better call {@link ChoiceFilterEditor#resetFilter()}</p>
+     * @see  ITableFilterEditor#setFilter(Object)
+     */
+    public void setFilter(Object content) {
+        getModel().setSelectedItem(content);
+        filter.propagateFilterChange(false);
+    }
+
 
     /**
      * @see  ITableFilterEditor#getComponent()
@@ -298,6 +325,20 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
     @Override public void setEnabled(boolean enabled) {
         super.setEnabled(enabled);
         filter.propagateFilterChange(true);
+    }
+
+    /**
+     * @see ITableFilterEditor#addTableFilterObserver(ITableFilterEditorObserver)
+     */
+    public void addTableFilterObserver(ITableFilterEditorObserver observer) {
+    	observerHelper.addTableFilterObserver(observer);
+    }
+    
+    /**
+     * @see ITableFilterEditor#removeTableFilterObserver(ITableFilterEditorObserver)
+     */
+    public void removeTableFilterObserver(ITableFilterEditorObserver observer) {
+    	observerHelper.removeTableFilterObserver(observer);
     }
 
     /**

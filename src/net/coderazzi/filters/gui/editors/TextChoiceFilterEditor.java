@@ -27,6 +27,7 @@ package net.coderazzi.filters.gui.editors;
 
 import net.coderazzi.filters.IFilterObservable;
 import net.coderazzi.filters.gui.ITableFilterEditor;
+import net.coderazzi.filters.gui.ITableFilterEditorObserver;
 import net.coderazzi.filters.gui.ITableFilterTextBasedEditor;
 import net.coderazzi.filters.parser.IFilterTextParser;
 
@@ -76,6 +77,9 @@ public class TextChoiceFilterEditor extends JComboBox implements ITableFilterTex
     /** The color currently set as background **/    
     private Color backgroundColor;
     
+    /** Helper to handle the table filter observers **/
+    private ObserverHelper observerHelper;
+
     /** The TextField instance that handles all the work */
     TextField editor;
 
@@ -95,6 +99,9 @@ public class TextChoiceFilterEditor extends JComboBox implements ITableFilterTex
                     addToHistoric(historic);
                 }
             };
+
+        observerHelper = new ObserverHelper(this);
+        
         addItemListener(new ItemListener() {
                 public void itemStateChanged(ItemEvent e) {
 
@@ -211,6 +218,22 @@ public class TextChoiceFilterEditor extends JComboBox implements ITableFilterTex
         setHistoricLength(0);
         setHistoricLength(h);
         editor.setText("");
+    }
+
+    /**
+     * <p>Returns the content of the filter, which is always a String.</p>
+     * @see  ITableFilterEditor#getFilter()
+     */
+    public String getFilter() {
+    	return editor.getText();
+    }
+    
+    /**
+     * <p>Sets the content of the filter, which must always be a String.</p>
+     * @see  ITableFilterEditor#setFilter(Object)
+     */
+    public void setFilter(Object content) {
+    	editor.setText(content==null? "" : content.toString());
     }
 
     /**
@@ -358,4 +381,19 @@ public class TextChoiceFilterEditor extends JComboBox implements ITableFilterTex
             comboBoxModelList.add(c);
         }
     }
+
+    /**
+     * @see ITableFilterEditor#addTableFilterObserver(ITableFilterEditorObserver)
+     */
+    public void addTableFilterObserver(ITableFilterEditorObserver observer) {
+    	observerHelper.addTableFilterObserver(observer);
+    }
+    
+    /**
+     * @see ITableFilterEditor#removeTableFilterObserver(ITableFilterEditorObserver)
+     */
+    public void removeTableFilterObserver(ITableFilterEditorObserver observer) {
+    	observerHelper.removeTableFilterObserver(observer);
+    }
+
 }

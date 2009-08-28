@@ -1264,6 +1264,13 @@ public class TableFilterHeader extends JPanel {
         public void resetFilter() {
         }
 
+        public Object getFilter() {
+        	return null;
+        }
+
+        public void setFilter(Object content) {
+        }
+
         public IFilterObservable getFilterObservable() {
             return this;
         }
@@ -1271,7 +1278,13 @@ public class TableFilterHeader extends JPanel {
         public void removeFilterObserver(IFilterObserver listener) {
         }
 
-        @Override public void setEnabled(boolean enabled) {
+        public void setEnabled(boolean enabled) {
+        }
+
+        public void addTableFilterObserver(ITableFilterEditorObserver observer) {
+        }
+        
+        public void removeTableFilterObserver(ITableFilterEditorObserver observer) {
         }
     }
 }

@@ -283,7 +283,10 @@ public class TableChoiceFilterEditor extends ChoiceFilterEditor {
      * TableChoiceFilterEditor#setFixedChoiceMode(Object, Object[])}
      */
     @Override public void setChoices(Object labelForOtherChoices, Object... choices) {
-        table = null;
+    	if (table != null){
+    		table.getModel().removeTableModelListener(tableModelListener);
+    		table = null;
+    	}
         setFixedChoiceMode(labelForOtherChoices, choices);
     }
 
