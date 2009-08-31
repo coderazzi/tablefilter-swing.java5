@@ -27,8 +27,11 @@ package net.coderazzi.filters.parser.generic;
 
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import net.coderazzi.filters.resources.Messages;
 
 
 /**
@@ -193,6 +196,16 @@ public class OperandFactory implements IRelationalOperandFactory {
      */
     public final StringWildcardOperand distinctICaseREOperand = new StringWildcardOperand("!~@",
             true, true);
+    
+    /**
+     * Default constructor, sets the DateBuilder as default comparator, if
+     * net.coderazzi.filters.CompareDatesAsBuilt is defined as true
+     */
+    public OperandFactory() {
+    	if (Boolean.parseBoolean(Messages.getString("net.coderazzi.filters.CompareDatesAsBuilt", ""))){
+        	setComparator(Date.class, DateHandler.getDefault());    		
+    	}
+	}
 
     /**
      * @see  IRelationalOperandFactory#getOperand(char, String, int)

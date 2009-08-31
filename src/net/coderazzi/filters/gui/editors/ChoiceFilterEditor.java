@@ -75,7 +75,7 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
      * to perform no filtering.
      */
     public static final Object NO_FILTER = new Object(){
-    	public String toString() {return " ";}
+    	@Override public String toString() {return " ";}
     };
 
 
@@ -235,6 +235,7 @@ public class ChoiceFilterEditor extends JComboBox implements ITableFilterEditor 
      * Returns the filter position
      *
      * @see  ChoiceFilterEditor#setFilterPosition(int)
+     * @see  ITableFilterEditor#getFilterPosition()
      */
     public int getFilterPosition() {
         return filterPosition;

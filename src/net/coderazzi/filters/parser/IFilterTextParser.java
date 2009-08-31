@@ -27,6 +27,7 @@ package net.coderazzi.filters.parser;
 
 import net.coderazzi.filters.artifacts.RowFilter;
 
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -78,5 +79,23 @@ public interface IFilterTextParser {
      * Ignores case on the conditions associated to variables with String type
      */
     public void setIgnoreCase(boolean ignore);
+
+    /**
+     * <p>Sets a specific comparator for a given class, that should override the default Compare
+     * algorithm for the given class.</p>
+     *
+     * <p>If the class is not {@link java.lang.Comparable}, this method should be invoked to support
+     * any comparison operator.</p>
+     * 
+     * @since version 2.0
+     */
+    public void setComparator(Class<?> c, Comparator<?> cmp);
+
+    /**
+     * Provides the {@link ITypeBuilder} to build non basic types
+     * 
+     * @since version 2.0
+     */
+    public void setTypeBuilder(Class<?> c, ITypeBuilder parser);
 
 }

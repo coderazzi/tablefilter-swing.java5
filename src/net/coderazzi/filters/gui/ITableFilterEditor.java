@@ -76,7 +76,12 @@ public interface ITableFilterEditor {
      * @since version 2.0
      */
     public Object getFilter();
-
+    
+    /**
+     * Returns the associated column in the table
+     */
+    public int getFilterPosition();
+    
     /**
      * Adds a new observer to the editor
      * @since version 2.0

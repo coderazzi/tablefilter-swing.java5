@@ -382,7 +382,7 @@ public class TableChoiceFilterEditor extends ChoiceFilterEditor {
         }
     }
     
-    public void setModel(ComboBoxModel aModel) {
+    @Override public void setModel(ComboBoxModel aModel) {
     	super.setModel(aModel);
     	//if the user sets a model, no reason to continue listening for events
     	//note that this happens also if the user provides a list of choices

@@ -143,6 +143,7 @@ public class TextFilterEditor extends JTextField implements ITableFilterTextBase
      * Returns the filter position
      *
      * @see  TextFilterEditor#setFilterPosition(int)
+     * @see  ITableFilterEditor#getFilterPosition()
      */
     public int getFilterPosition() {
         return editor.getFilterPosition();

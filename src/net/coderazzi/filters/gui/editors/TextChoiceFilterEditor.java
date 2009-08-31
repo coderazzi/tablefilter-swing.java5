@@ -184,6 +184,7 @@ public class TextChoiceFilterEditor extends JComboBox implements ITableFilterTex
      * Returns the filter position
      *
      * @see  TextChoiceFilterEditor#setFilterPosition(int)
+     * @see  ITableFilterEditor#getFilterPosition()
      */
     public int getFilterPosition() {
         return editor.getFilterPosition();

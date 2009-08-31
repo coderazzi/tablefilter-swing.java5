@@ -29,6 +29,7 @@ import net.coderazzi.filters.parser.FilterTextParsingException;
 import net.coderazzi.filters.parser.ITypeBuilder;
 import net.coderazzi.filters.resources.Messages;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,7 @@ public class TypesFactory implements ITypesFactory {
         factories.put(Double.class, doubleTypeFactory);
         factories.put(Byte.class, byteTypeFactory);
         factories.put(Character.class, charTypeFactory);
+        factories.put(Date.class, DateHandler.getDefault());
     }
 
     /**
