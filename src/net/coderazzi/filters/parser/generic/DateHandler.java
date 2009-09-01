@@ -72,7 +72,6 @@ public class DateHandler implements ITypeBuilder, Comparator<Date>{
 	
 	/**
 	 * Returns the defined {@link DateFormat}
-	 * @return
 	 */
 	public DateFormat getDateFormat(){
 		return parser;
