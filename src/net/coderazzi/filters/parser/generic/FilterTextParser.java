@@ -1,8 +1,8 @@
 /**
- * Author:  Luis M Pena  ( sen@coderazzi.net )
+ * Author:  Luis M Pena  ( lu@coderazzi.net )
  * License: MIT License
  *
- * Copyright (c) 2007 Luis M. Pena  -  sen@coderazzi.net
+ * Copyright (c) 2007 Luis M. Pena  -  lu@coderazzi.net
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -75,7 +75,7 @@ import java.util.Map;
  * </ul>
  * </p>
  *
- * @author  Luis M Pena - sen@coderazzi.net
+ * @author  Luis M Pena - lu@coderazzi.net
  */
 public class FilterTextParser implements IFilterTextParser {
 
@@ -86,19 +86,19 @@ public class FilterTextParser implements IFilterTextParser {
     final public static char OPEN_PARENTHESIS_CHAR = '(';
     final public static char CLOSE_PARENTHESIS_CHAR = ')';
     final public static String DEFAULT_NULL_STRING = Messages.getString(
-            "FilterTextParser.NullFilterText");
+            "TextParser.NullFilterText");
 
     final static String INVALID_OPERAND_EXCEPTION = Messages.getString(
-            "FilterTextParser.InvalidOperand");
+            "TextParser.InvalidOperand");
     final static String INVALID_OPERAND_IDENTIFIER_EXCEPTION = Messages.getString(
-            "FilterTextParser.InvalidOperandForIdentifier");
-    final static String INVALID_TYPE_EXCEPTION = Messages.getString("FilterTextParser.InvalidType");
+            "TextParser.InvalidOperandForIdentifier");
+    final static String INVALID_TYPE_EXCEPTION = Messages.getString("TextParser.InvalidType");
     final static String UNCOMPLETE_FILTER_EXCEPTION = Messages.getString(
-            "FilterTextParser.UncompleteFilter");
+            "TextParser.UncompleteFilter");
     final static String UNEXPECTED_TEXT_EXCEPTION = Messages.getString(
-            "FilterTextParser.UnexpectedText");
+            "TextParser.UnexpectedText");
     final static String INVALID_IDENTIFIER_EXCEPTION = Messages.getString(
-            "FilterTextParser.InvalidIdentifier");
+            "TextParser.InvalidIdentifier");
 
     /** Set of defined identifiers, indexed by name */
     private Map<String, IdentifierInfo> identifiers;
