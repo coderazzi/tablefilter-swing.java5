@@ -29,12 +29,14 @@ public class AppUserFilter extends JPanel{
 		TableFilterHeader filterHeader = new TableFilterHeader(table, EditorMode.CHOICE);
 		add(new JScrollPane(table), BorderLayout.CENTER);
 		
+		final int nameColumn=model.getColumn(TestTableModel.NAME);
 		final UserFilter userFilter = new UserFilter(filterHeader){
 			@Override
 			public boolean include(Entry entry) {
-				return -1!=entry.getStringValue(model.getColumn(TestTableModel.NAME)).indexOf('e');
+				return -1!=entry.getStringValue(nameColumn).indexOf('e');
 			}
-		};
+		};		
+
 		JCheckBox check = new JCheckBox("Filter out any row where the name does not contain a lower case 'e'", true);
 		add(check, BorderLayout.SOUTH);
 		
@@ -47,6 +49,7 @@ public class AppUserFilter extends JPanel{
 	}
 	
 	public static void main(String[] args) {
+		System.setProperty("net.coderazzi.filters.ChoiceFilterEditor.EmptyValue", "(unassigned)");
 		AppUserFilter testTableFilter = new AppUserFilter();
 		JFrame frame = new JFrame(Messages.getString("TestUserFilter.Title"));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -37,26 +37,14 @@ public class Bug1_2_4_Resizing extends JFrame{
 
 		Bug1_2_4_ResizingView view = new Bug1_2_4_ResizingView();
 		frame.getContentPane().add(view, BorderLayout.CENTER);
-		view.getTable().setModel(createModel());
+		view.getTable().setModel(TestTableModel.createTestTableModel(100));
 		view.getTableFilterHeader().setTable(view.getTable());
 
 		frame.setSize(800, 600);
 		frame.setLocation(50, 50);
 		frame.setVisible(true);		
 	}
-	
-	
-    TestTableModel createModel() {
-        TestData.resetRandomness();
-
-        List<TestData> ltd = new ArrayList<TestData>();
-
-        for (int i = 0; i < 1000; i++)
-            ltd.add(new TestData());
-
-        return new TestTableModel(ltd);
-    }
-
+		
 
 
 

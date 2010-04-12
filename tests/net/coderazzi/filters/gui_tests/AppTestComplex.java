@@ -122,9 +122,9 @@ public class AppTestComplex extends JFrame implements ListSelectionListener {
             return null;
 
         //>>//special difference with Java 6
-        int model = ((TableModelFilter) table.getModel()).convertRowIndexToView(selected);
-
-        return tableModel.getRow(sorter.modelIndex(model));
+        int model = ((TableModelFilter) table.getModel()).convertRowIndexToModel(selected);
+        TestData ret = tableModel.getRow(sorter.modelIndex(model));
+        return ret;
     }
 
 
@@ -358,14 +358,17 @@ public class AppTestComplex extends JFrame implements ListSelectionListener {
 
         resetFilterButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    filterHeader.resetFilters();
+                    filterHeader.resetFilter();
                 }
             });
 
         resetModelButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                 	tableModel = TestTableModel.createTestTableModel();
-                    table.setModel(tableModel);
+                    JTableHeader header = table.getTableHeader();
+                    sorter = new TableSorter(tableModel, header);
+                    table.setModel(sorter);
+                	filterHeader.setTable(table);
                     setTableRenderers();
                     setChoiceRenderers();
                 }

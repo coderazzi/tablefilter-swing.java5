@@ -62,8 +62,6 @@ import javax.swing.table.TableModel;
  * <p/>This is a long overdue rewrite of a class of the same name that first appeared in the swing
  * table demos in 1997.
  * 
- * <p/> Some VERY MINOR changes (coderazzi) to reflect Java6 behavior
- *
  * @author   Philip Milne
  * @author   Brendon McLean
  * @author   Dan van Enckevort
@@ -415,12 +413,7 @@ public class TableSorter extends AbstractTableModel {
                 return;
             }
 
-            // Something has happened to the data that may have invalidated the row order. 
-            // @Changed by CODERAZZI: in the original implementation, this change triggers a full re-sorting,
-            //   which eventually triggers a new filtering.
-            //  However this is not the behavior in Java 6; in Java 6, the update of a row does not update the
-            //   sorting or the filtering, so we need now to do NOTHING
-            //clearSortingState();
+            clearSortingState();
             fireTableChanged(e);
 
             return;

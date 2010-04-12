@@ -60,7 +60,8 @@ abstract public class AbstractComposedFilter extends AbstractObservableRowFilter
      */
     @Override
 	public void detach() {
-        filterObservers.clear();
+        super.detach();
+        filters.clear();
     }
 
     /**

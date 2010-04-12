@@ -213,6 +213,7 @@ abstract class TextField implements IFilterObservable {
      */
     public void setErrorBackground(Color bg) {
         this.wrongBackgroundColor = bg;
+        updateColors();
     }
 
     /**

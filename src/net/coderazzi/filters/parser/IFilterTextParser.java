@@ -63,7 +63,7 @@ public interface IFilterTextParser {
      *
      * <p>A filter supporting the interface {@link net.coderazzi.filters.artifacts.RowFilter}
      * receives an instance of type {@link net.coderazzi.filters.artifacts.RowFilter.Entry} that
-     * can enquiry to obtain the value at a specified index; the filter position is that given
+     * can enquire to obtain the value at a specified index; the filter position is that given
      * index, and corresponds, in the case of a table, to the column to which this editor is
      * associated.</p>
      */

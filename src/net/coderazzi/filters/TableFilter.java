@@ -28,6 +28,11 @@ package net.coderazzi.filters;
 import net.coderazzi.filters.artifacts.ITableModelFilter;
 import net.coderazzi.filters.artifacts.RowFilter;
 import net.coderazzi.filters.artifacts.TableModelFilter;
+import net.coderazzi.filters.gui.TableFilterHeader.EditorMode;
+import net.coderazzi.filters.gui.TableFilterHeader.Position;
+import net.coderazzi.filters.parser.IFilterTextParser;
+import net.coderazzi.filters.parser.generic.FilterTextParser;
+import net.coderazzi.filters.resources.Messages;
 
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
@@ -69,12 +74,14 @@ public class TableFilter extends AndFilter {
 
     /**
      * pendingNotifications keeps track of notifications to be sent to the observers, but were
-     * discarded becase the variable sendNotifications was negative.
+     * discarded because the variable sendNotifications was negative.
      */
     private boolean pendingNotifications;
 
     /** The associated table, if any. */
     private JTable table;
+
+    public static Settings Settings = new Settings();
 
     /**
      * Default constructor
@@ -200,6 +207,70 @@ public class TableFilter extends AndFilter {
         table.setModel(modelFilter);
 
         return modelFilter;
+    }
+
+    /**
+     * Class to define some common settings to the TableFilter library. It is just a sugar
+     * replacement to using directly system properties
+     *
+     * @since  2.1
+     */
+    public static class Settings {
+        /**
+         * Set to true to perform automatically the selection of a row that is uniquely identified
+         * by the existing filter. It is true by default.
+         */
+        public boolean autoSelection = Boolean.parseBoolean(
+                Messages.getString("TableFilter.AutoSelection", "true"));
+
+        /** The header editor mode, {@link EditorMode#BASIC} by default. */
+        public EditorMode headerMode = EditorMode.valueOf(
+                Messages.getString("Header.Mode", "BASIC"));
+
+        /** The header position, {@link Position#INLINE} by default. */
+        public Position headerPosition = Position.valueOf(
+                Messages.getString("Header.Position", "INLINE"));
+
+        /**
+         * Whether the text parsers should ignore case or not. It is false by default (so filtering
+         * is case sensitive)
+         */
+        public boolean ignoreCase = Boolean.parseBoolean(
+                Messages.getString("TextParser.IgnoreCase", "false"));
+        
+        /** 
+         * The class to handle the text parsing by default. It must have a default constructor.
+         * It corresponds to the property TextParser.class
+         */
+        public Class<? extends IFilterTextParser> filterTextParserClass;
+                
+        
+        /** Creates a TextParser as defined by default */
+        public IFilterTextParser newTextParser(){
+        	try{
+        		IFilterTextParser ret =  filterTextParserClass.newInstance();
+        		ret.setIgnoreCase(ignoreCase);
+        		return ret;
+        	} catch(Exception ex){
+        		throw new RuntimeException("Error creating filter text parser of type "
+        				+ filterTextParserClass, ex);
+        	}
+        }
+        
+        {
+        	filterTextParserClass = FilterTextParser.class;
+        	String cl = Messages.getString("TextParser.class", null);
+        	if (cl!=null){
+        		try {
+        			filterTextParserClass = (Class<? extends IFilterTextParser>)Class.forName(cl);
+        		} catch (ClassNotFoundException cne){
+            		throw new RuntimeException("Error finding filter text parser of class " +cl, cne);
+        		} catch (ClassCastException cce){
+            		throw new RuntimeException("Filter text parser of class " +cl +
+            				" is not a valid IFilterTextParser class");        			
+        		}
+        	}
+        }
     }
 
 }

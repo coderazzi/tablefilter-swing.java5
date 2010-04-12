@@ -48,9 +48,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
-import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
 
+import net.coderazzi.filters.TableFilter;
 import net.coderazzi.filters.gui.ITableFilterEditor;
 import net.coderazzi.filters.gui.ITableFilterHeaderObserver;
 import net.coderazzi.filters.gui.ITableFilterTextBasedEditor;
@@ -121,7 +121,7 @@ public class AppTestMain extends JFrame {
         modeComboBox = new JComboBox();
         positionComboBox = new JComboBox();
         filterEnabler = new JCheckBox(Messages.getString("Tests.Enable"), true);
-        caseIgnorer = new JCheckBox(Messages.getString("Tests.IgnoreCase"), false);
+        caseIgnorer = new JCheckBox(Messages.getString("Tests.IgnoreCase"), TableFilter.Settings.ignoreCase);
         exactDateChecker = new JCheckBox(Messages.getString("Tests.UseExactDate"), true);
         changeTableButton = new JButton(Messages.getString("Tests.ChangeTable"));
         resetFilterButton = new JButton(Messages.getString("Tests.ResetFilter"));
@@ -165,8 +165,8 @@ public class AppTestMain extends JFrame {
         table.setModel(sorter);
 
 
-        filterHeader.setFont(table.getFont().deriveFont(10f));
         eventsLog.setFont(table.getFont().deriveFont(9f));
+        filterHeader.setFont(table.getFont().deriveFont(10f));
 
         getContentPane().add(main);
     }
@@ -377,7 +377,7 @@ public class AppTestMain extends JFrame {
 
         resetFilterButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    filterHeader.resetFilters();
+                    filterHeader.resetFilter();
                 }
             });
 
@@ -388,13 +388,9 @@ public class AppTestMain extends JFrame {
                     JTableHeader header = table.getTableHeader();
                     TableSorter sorter = new TableSorter(tableModel, header);
                     table.setModel(sorter);
-                    //>>//special difference with Java 6
-                    SwingUtilities.invokeLater(new Runnable() {						
-						public void run() {
-							setChoiceRenderers();
-		                    setTableRenderers();
-						}
-					});
+                    filterHeader.setTable(table);
+					setChoiceRenderers();
+		            setTableRenderers();
                 }
             });
 
