@@ -38,7 +38,7 @@ import java.util.Set;
  *
  * @author  Luis M Pena - lu@coderazzi.net
  */
-abstract public class BasedFilter extends RowFilter implements IFilterObservable {
+abstract public class BaseFilter extends RowFilter implements IFilterObservable {
 
     /** The set of currently subscribed observers */
     protected Set<IFilterObserver> filterObservers = new HashSet<IFilterObserver>();

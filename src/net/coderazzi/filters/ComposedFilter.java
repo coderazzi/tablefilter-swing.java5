@@ -25,12 +25,10 @@
 
 package net.coderazzi.filters;
 
-import net.coderazzi.filters.artifacts.RowFilter;
-
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
+
+import net.coderazzi.filters.artifacts.RowFilter;
 
 
 /**
@@ -40,72 +38,60 @@ import java.util.Set;
  *
  * @author  Luis M Pena - lu@coderazzi.net
  */
-abstract public class ComposedFilter extends BasedFilter
-    implements IFilterObserver {
+abstract public class ComposedFilter extends BaseFilter implements IFilterObserver {
 
-    /** Map containing, for each controlled observable filter, the associated filter instance */
-    protected Map<IFilterObservable, RowFilter> filters =
-        new HashMap<IFilterObservable, RowFilter>();
+    /** Set of associated IFilters */
+    protected Set<IFilter> filters = new HashSet<IFilter>();
 
     /**
-     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilterObservable}
+     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilter}
      * instances
      */
-    protected ComposedFilter(IFilterObservable... observables) {
-        addFilterObservable(observables);
+    protected ComposedFilter(IFilter... observables) {
+        addFilter(observables);
     }
 
     /**
-     * Detaches the instance from any observer/observable
+     * Detaches the instance from any observer
      */
-    @Override
-	public void detach() {
+    @Override public void detach() {
         super.detach();
         filters.clear();
     }
 
     /**
-     * Subscribes one or more {@link net.coderazzi.filters.IFilterObservable} instances to receive
+     * Subscribes one or more {@link net.coderazzi.filters.IFilter} instances to receive
      * filter events from this composition filter.
      */
-    public void addFilterObservable(IFilterObservable... observables) {
-        for (IFilterObservable observable : observables) {
-            if (!filters.containsKey(observable)) {
-                filters.put(observable, null);
+    public void addFilter(IFilter... filtersToAdd) {
+        for (IFilter observable : filtersToAdd) {
+            if (filters.add(observable)) {
                 observable.addFilterObserver(this);
             }
         }
     }
 
     /**
-     * Unsubscribes a {@link net.coderazzi.filters.IFilterObservable} that was previously
-     * subscribed to receibe filter events
+     * Unsubscribes a {@link net.coderazzi.filters.IFilter} that was previously
+     * subscribed to receive filter events
      */
-    public void removeFilterObservable(IFilterObservable observable) {
-        if (filters.containsKey(observable)) {
-            observable.removeFilterObserver(this);
-            if (null != filters.remove(observable))
-                reportFilterUpdatedToObservers();
+    public void removeFilter(IFilter filter) {
+        if (filters.remove(filter)) {
+            reportFilterUpdatedToObservers();
         }
     }
 
     /**
-     * Returns all {@link net.coderazzi.filters.IFilterObservable} instances previously added.
+     * Returns all {@link net.coderazzi.filters.IFilter} instances previously added.
      */
-    public Set<IFilterObservable> getFilterObservables() {
-        return new HashSet<IFilterObservable>(filters.keySet());
+    public Set<IFilter> getFilterObservables() {
+        return new HashSet<IFilter>(filters);
     }
 
     /**
-     * @see  IFilterObserver#filterUpdated(IFilterObservable, RowFilter)
+     * @see  IFilterObserver#filterUpdated(IFilter, RowFilter)
      */
-    public void filterUpdated(IFilterObservable producer, RowFilter newValue) {
-        if (!filters.containsKey(producer))
-            return;
-
-        RowFilter oldValue = filters.put(producer, newValue);
-        if ((oldValue == null) && (newValue == null))
-            return;
+    public void filterUpdated(IFilter producer) {
         reportFilterUpdatedToObservers();
     }
 

@@ -36,24 +36,22 @@ import net.coderazzi.filters.artifacts.RowFilter;
 public class OrFilter extends ComposedFilter {
 
     /**
-     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilterObservable}
+     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilter}
      * instances
      */
-    public OrFilter(IFilterObservable... observables) {
+    public OrFilter(IFilter... observables) {
         super(observables);
     }
 
     /**
-     * @see  RowFilter#include(RowFilter.Entry)
+     * @see  IFilter#include(RowFilter.Entry)
      */
-    @Override public boolean include(RowFilter.Entry rowEntry) {
+	@Override public boolean include(RowFilter.Entry rowEntry) {
         boolean ret = true;
-        for (RowFilter filter : filters.values()) {
-            if (filter != null) {
-                if (filter.include(rowEntry))
-                    return true;
-                ret = false;
-            }
+        for (IFilter filter : filters){
+            if (filter.include(rowEntry))
+                return true;
+            ret = false;
         }
 
         return ret;

@@ -25,24 +25,20 @@
 
 package net.coderazzi.filters;
 
-import net.coderazzi.filters.artifacts.ITableModelFilter;
-import net.coderazzi.filters.artifacts.RowFilter;
-import net.coderazzi.filters.artifacts.TableModelFilter;
-import net.coderazzi.filters.gui.TableFilterHeader.EditorMode;
-import net.coderazzi.filters.gui.TableFilterHeader.Position;
-import net.coderazzi.filters.parser.IFilterTextParser;
-import net.coderazzi.filters.parser.generic.FilterTextParser;
-import net.coderazzi.filters.resources.Messages;
-
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
+import net.coderazzi.filters.artifacts.ITableModelFilter;
+import net.coderazzi.filters.artifacts.RowFilter;
+import net.coderazzi.filters.artifacts.TableModelFilter;
+
+
 
 /**
- * <p>TableFilter represents a {@link RowFilter} instance that can be attached to a {@link
- * javax.swing.JTable} to compose dynamically the outcome of one or more filter editors. As such, it
- * is a dynamic filter, which updates the table when there are changes in any of the composed sub
- * filters.</p>
+ * <p>TableFilter represents a {@link RowFilter} instance that can be attached to a
+ * {@link javax.swing.JTable} to compose dynamically the outcome of one or more filter editors. As
+ * such, it is a dynamic filter, which updates the table when there are changes in any of the
+ * composed sub filters.</p>
  *
  * <p>Users require instancing TableFilter instances only when managing their own filter editors.
  * Note that the {@link net.coderazzi.filters.gui.TableFilterHeader} already handles its own
@@ -70,28 +66,26 @@ public class TableFilter extends AndFilter {
      * the filter observers. Notifications are only sent to the observers when this variable is non
      * negative.
      */
-    private int sendNotifications = 0;
+    int sendNotifications = 0;
 
     /**
      * pendingNotifications keeps track of notifications to be sent to the observers, but were
-     * discarded because the variable sendNotifications was negative.
+     * discarded because the variable sendNotifications was false.
      */
     private boolean pendingNotifications;
 
     /** The associated table, if any. */
-    private JTable table;
-
-    public static Settings Settings = new Settings();
+    JTable table;
 
     /**
      * Default constructor
      */
     public TableFilter() {
 
-        //create an observer instance to notify the associated table when there
-        //are filter changes.
+        // create an observer instance to notify the associated table when there
+        // are filter changes.
         addFilterObserver(new IFilterObserver() {
-                public void filterUpdated(IFilterObservable obs, RowFilter newValue) {
+                public void filterUpdated(IFilter obs) {
                     notifyUpdatedFilter(false);
                 }
             });
@@ -106,8 +100,8 @@ public class TableFilter extends AndFilter {
     }
 
     /**
-     * Method to set the associated table. If the tableModel associated to the table does not
-     * implement the {@link ITableModelFilter} interface, one is automatically created
+     * Method to set the associated table. If the table had not defined its own
+     * {@link javax.swing.RowSorter}, the default one is automatically created.
      */
     public void setTable(JTable table) {
     	if (this.table!=null){
@@ -140,8 +134,8 @@ public class TableFilter extends AndFilter {
 
 
     /**
-     * <p>Temporarily enable/disable notifications to the observers, including the registered {@link
-     * javax.swing.JTable}.</p>
+     * <p>Temporarily enable/disable notifications to the observers, including the registered
+     * {@link javax.swing.JTable}.</p>
      *
      * <p>Multiple calls to this method can be issued, but the caller must ensure that there are as
      * many calls with true parameter as with false parameter, as the notifications are only
@@ -209,68 +203,5 @@ public class TableFilter extends AndFilter {
         return modelFilter;
     }
 
-    /**
-     * Class to define some common settings to the TableFilter library. It is just a sugar
-     * replacement to using directly system properties
-     *
-     * @since  2.1
-     */
-    public static class Settings {
-        /**
-         * Set to true to perform automatically the selection of a row that is uniquely identified
-         * by the existing filter. It is true by default.
-         */
-        public boolean autoSelection = Boolean.parseBoolean(
-                Messages.getString("TableFilter.AutoSelection", "true"));
-
-        /** The header editor mode, {@link EditorMode#BASIC} by default. */
-        public EditorMode headerMode = EditorMode.valueOf(
-                Messages.getString("Header.Mode", "BASIC"));
-
-        /** The header position, {@link Position#INLINE} by default. */
-        public Position headerPosition = Position.valueOf(
-                Messages.getString("Header.Position", "INLINE"));
-
-        /**
-         * Whether the text parsers should ignore case or not. It is false by default (so filtering
-         * is case sensitive)
-         */
-        public boolean ignoreCase = Boolean.parseBoolean(
-                Messages.getString("TextParser.IgnoreCase", "false"));
-        
-        /** 
-         * The class to handle the text parsing by default. It must have a default constructor.
-         * It corresponds to the property TextParser.class
-         */
-        public Class<? extends IFilterTextParser> filterTextParserClass;
-                
-        
-        /** Creates a TextParser as defined by default */
-        public IFilterTextParser newTextParser(){
-        	try{
-        		IFilterTextParser ret =  filterTextParserClass.newInstance();
-        		ret.setIgnoreCase(ignoreCase);
-        		return ret;
-        	} catch(Exception ex){
-        		throw new RuntimeException("Error creating filter text parser of type "
-        				+ filterTextParserClass, ex);
-        	}
-        }
-        
-        {
-        	filterTextParserClass = FilterTextParser.class;
-        	String cl = Messages.getString("TextParser.class", null);
-        	if (cl!=null){
-        		try {
-        			filterTextParserClass = (Class<? extends IFilterTextParser>)Class.forName(cl);
-        		} catch (ClassNotFoundException cne){
-            		throw new RuntimeException("Error finding filter text parser of class " +cl, cne);
-        		} catch (ClassCastException cce){
-            		throw new RuntimeException("Filter text parser of class " +cl +
-            				" is not a valid IFilterTextParser class");        			
-        		}
-        	}
-        }
-    }
 
 }

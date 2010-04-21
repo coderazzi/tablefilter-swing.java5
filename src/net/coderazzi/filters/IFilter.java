@@ -27,30 +27,28 @@ package net.coderazzi.filters;
 
 import net.coderazzi.filters.artifacts.RowFilter;
 
-
 /**
- * Composed set of filters, added via logical AND
+ * <p>Interface to be implemented by any instance holding a filter than can be updated
+ * dynamically.</p>
+ *
+ * <p>Ant change on the filter is propagated to the observers, in no prefixed order.</p>
  *
  * @author  Luis M Pena - lu@coderazzi.net
  */
-public class AndFilter extends ComposedFilter {
+public interface IFilter {
 
     /**
-     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilter}
-     * instances
+     * Adds an observer to receive filter change notifications.
      */
-    public AndFilter(IFilter... observables) {
-        super(observables);
-    }
+    public void addFilterObserver(IFilterObserver observer);
 
     /**
-     * @see  IFilter#include(RowFilter.Entry)
+     * Unregisters an observer, that will not receive no further filter update notifications.
      */
-	@Override public boolean include(RowFilter.Entry rowEntry) {
-        for (IFilter filter : filters)
-            if (!filter.include(rowEntry))
-                return false;
+    public void removeFilterObserver(IFilterObserver observer);
 
-        return true;
-    }
+    /**
+     * RowFilter interface
+     */
+	public boolean include(RowFilter.Entry rowEntry);
 }
