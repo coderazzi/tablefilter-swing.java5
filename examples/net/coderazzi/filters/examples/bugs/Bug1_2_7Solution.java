@@ -1,4 +1,4 @@
-package net.coderazzi.filters.gui_tests.bugs;
+package net.coderazzi.filters.examples.bugs;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -12,14 +12,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 
+import net.coderazzi.filters.examples.utils.TestTableModel;
 import net.coderazzi.filters.gui.TableFilterHeader;
 import net.coderazzi.filters.gui.TableFilterHeader.Position;
-import net.coderazzi.filters.gui_tests.TestTableModel;
 
 public class Bug1_2_7Solution extends JPanel{
 	
 	private static final long serialVersionUID = -22834158973030319L;
-
+	
 	private final static String NONE="  - - - - ";
 	private final static String INLINE="INLINE";
 	private final static String TOP=" TOP";

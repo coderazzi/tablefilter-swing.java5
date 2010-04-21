@@ -1,16 +1,13 @@
-package net.coderazzi.filters.gui_tests.bugs;
+package net.coderazzi.filters.examples.bugs;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
 import javax.swing.JInternalFrame;
 import javax.swing.UIManager;
 
-import net.coderazzi.filters.gui_tests.TestData;
-import net.coderazzi.filters.gui_tests.TestTableModel;
+import net.coderazzi.filters.examples.utils.TestTableModel;
 
 /**
  * Test to verify some resizing problems happening on version 1.2.4
@@ -18,7 +15,7 @@ import net.coderazzi.filters.gui_tests.TestTableModel;
  */
 public class Bug1_2_4_Resizing extends JFrame{
 	
-	private static final long serialVersionUID = -2917018640052907357L;
+	private static final long serialVersionUID = 851460277109186791L;
 
 	Bug1_2_4_Resizing(){
 		super("Bug 1_2_4");

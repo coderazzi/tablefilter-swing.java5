@@ -4,7 +4,7 @@
  * Created on December 14, 2007, 1:48 PM
  */
 
-package net.coderazzi.filters.gui_tests.bugs;
+package net.coderazzi.filters.examples.bugs;
 
 /**
  *
@@ -12,7 +12,7 @@ package net.coderazzi.filters.gui_tests.bugs;
  */
 public class Bug1_2_4_ResizingView extends javax.swing.JPanel
 {
-
+        
 		private static final long serialVersionUID = -8267958152880405776L;
 
 		public Bug1_2_4_ResizingView ()
