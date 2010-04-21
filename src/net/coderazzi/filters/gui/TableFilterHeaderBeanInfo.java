@@ -23,34 +23,23 @@
  * THE SOFTWARE.
  */
 
-package net.coderazzi.filters;
+package net.coderazzi.filters.gui;
 
-import net.coderazzi.filters.artifacts.RowFilter;
+import java.beans.BeanDescriptor;
+import java.beans.SimpleBeanInfo;
 
-
-/**
- * Composed set of filters, added via logical AND
- *
- * @author  Luis M Pena - lu@coderazzi.net
- */
-public class AndFilter extends ComposedFilter {
-
-    /**
-     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilterObservable}
-     * instances
-     */
-    public AndFilter(IFilterObservable... observables) {
-        super(observables);
+public class TableFilterHeaderBeanInfo extends SimpleBeanInfo{
+    
+    @Override
+	public BeanDescriptor getBeanDescriptor() {
+        BeanDescriptor desc = new BeanDescriptor(TableFilterHeader.class);
+        desc.setValue("isContainer", Boolean.FALSE);
+        return desc;
+    }
+    
+    @Override
+	public java.awt.Image getIcon(int iconKind) {
+        return loadImage("/net/coderazzi/filters/resources/tableFilterHeader.png");
     }
 
-    /**
-     * @see  RowFilter#include(RowFilter.Entry)
-     */
-    @Override public boolean include(RowFilter.Entry rowEntry) {
-        for (RowFilter filter : filters.values())
-            if ((filter != null) && !filter.include(rowEntry))
-                return false;
-
-        return true;
-    }
 }

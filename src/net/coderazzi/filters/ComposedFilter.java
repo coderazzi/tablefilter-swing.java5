@@ -40,7 +40,7 @@ import java.util.Set;
  *
  * @author  Luis M Pena - lu@coderazzi.net
  */
-abstract public class AbstractComposedFilter extends AbstractObservableRowFilter
+abstract public class ComposedFilter extends BasedFilter
     implements IFilterObserver {
 
     /** Map containing, for each controlled observable filter, the associated filter instance */
@@ -51,7 +51,7 @@ abstract public class AbstractComposedFilter extends AbstractObservableRowFilter
      * Constructor built up out of none or more {@link net.coderazzi.filters.IFilterObservable}
      * instances
      */
-    protected AbstractComposedFilter(IFilterObservable... observables) {
+    protected ComposedFilter(IFilterObservable... observables) {
         addFilterObservable(observables);
     }
 

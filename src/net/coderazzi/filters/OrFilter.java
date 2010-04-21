@@ -33,7 +33,7 @@ import net.coderazzi.filters.artifacts.RowFilter;
  *
  * @author  Luis M Pena - lu@coderazzi.net
  */
-public class OrFilter extends AbstractComposedFilter {
+public class OrFilter extends ComposedFilter {
 
     /**
      * Constructor built up out of none or more {@link net.coderazzi.filters.IFilterObservable}

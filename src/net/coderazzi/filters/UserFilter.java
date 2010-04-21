@@ -7,7 +7,7 @@ import net.coderazzi.filters.gui.TableFilterHeader;
  * @author  Luis M Pena - lu@coderazzi.net
  * @since version 1.5.0
  */
-public abstract class UserFilter extends AbstractObservableRowFilter{
+public abstract class UserFilter extends BasedFilter{
 	
 	private TableFilter filter;
 	

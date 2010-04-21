@@ -23,34 +23,40 @@
  * THE SOFTWARE.
  */
 
-package net.coderazzi.filters;
+package net.coderazzi.filters.gui;
 
-import net.coderazzi.filters.artifacts.RowFilter;
-
+import net.coderazzi.filters.gui.editor.FilterEditor;
 
 /**
- * Composed set of filters, added via logical AND
+ * <p>A ITableFilterHeaderObserver instance receives notifications when the associated 
+ * {@link net.coderazzi.filters.gui.editor.FilterEditor} instances are created, destroyed,
+ * or update the held filter.
+ * </p>
  *
  * @author  Luis M Pena - lu@coderazzi.net
  */
-public class AndFilter extends ComposedFilter {
+public interface IFilterHeaderObserver {
+	
+	/**
+	 * <p>Informs the observer than a new filter editor is created</p>
+     * @param header the associated table filter header
+	 * @param editor
+	 */
+	public void tableFilterEditorCreated(TableFilterHeader header, FilterEditor editor);
+
+	/**
+	 * <p>Informs the observer than an existing filter editor has been
+	 * excluded from the filter header</p>
+     * @param header the associated table filter header
+	 * @param editor
+	 */
+	public void tableFilterEditorExcluded(TableFilterHeader header, FilterEditor editor);
 
     /**
-     * Constructor built up out of none or more {@link net.coderazzi.filters.IFilterObservable}
-     * instances
+     * <p>Notification made by the {@link net.coderazzi.filters.gui.editor.FilterEditor}
+     * when the filter's content is updated</p>
+     * @param header the associated table filter header
+     * @param editor the observable instance
      */
-    public AndFilter(IFilterObservable... observables) {
-        super(observables);
-    }
-
-    /**
-     * @see  RowFilter#include(RowFilter.Entry)
-     */
-    @Override public boolean include(RowFilter.Entry rowEntry) {
-        for (RowFilter filter : filters.values())
-            if ((filter != null) && !filter.include(rowEntry))
-                return false;
-
-        return true;
-    }
+    public void tableFilterUpdated(TableFilterHeader header, FilterEditor editor);
 }
