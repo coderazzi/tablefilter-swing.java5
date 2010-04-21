@@ -23,27 +23,15 @@
  * THE SOFTWARE.
  */
 
-package net.coderazzi.filters.gui;
+package net.coderazzi.filters.gui.editor;
 
-/**
- * <p>A ITableFilterEditorObserver instance receives notifications when the associated 
- * {@link net.coderazzi.filters.gui.ITableFilterEditor} instance updates the held filter.
- * </p>
- * <p>Its is uniquely a commodity class, its functionality could be carried out
- * using the original {@link net.coderazzi.filters.IFilterObserver} interface
- * </p>
- *
- * @author  Luis M Pena - lu@coderazzi.net
- * @since version 2.0
- */
-public interface ITableFilterEditorObserver {
+import java.beans.SimpleBeanInfo;
 
-    /**
-     * <p>Notification made by the {@link net.coderazzi.filters.gui.ITableFilterEditor}
-     * when the filter's content is updated</p>
-     * @param editor the observable instance
-     * @param newValue the new content of the editor. Its type depends on the
-     * filter editor, {@link net.coderazzi.filters.gui.ITableFilterEditor#getFilter()}
-     */
-    public void tableFilterUpdated(ITableFilterEditor editor, Object newValue);
+public class FilterEditorBeanInfo extends SimpleBeanInfo{
+    
+    @Override
+	public java.awt.Image getIcon(int iconKind) {
+        return loadImage("/net/coderazzi/filters/resources/filterEditor.png");
+    }
+
 }
