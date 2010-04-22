@@ -409,7 +409,9 @@ public class FilterEditor extends JComponent{
 			//trigger popup when the user clicks on the componnet itself
 			newComponent.getComponent().addMouseListener(new MouseAdapter() {
             	@Override public void mouseClicked(MouseEvent e) {
-            		triggerPopup(editor.getComponent());
+            		if (isEnabled()){
+            			triggerPopup(editor.getComponent());
+            		}
             	}
 			});
 			newComponent.getComponent().setPreferredSize(editor.getComponent().getPreferredSize());
@@ -443,7 +445,7 @@ public class FilterEditor extends JComponent{
 			}
 
 			public void focusGained(FocusEvent e) {
-				if (editor.focusGained()){
+				if (isEnabled() && editor.focusGained()){
 					showOptions();
 					popup.setPopupFocused(true);
 				}
