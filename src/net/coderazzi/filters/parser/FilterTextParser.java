@@ -20,31 +20,46 @@ import net.coderazzi.filters.artifacts.RowFilter;
 /**
  * Basic implementation of a {@link IFilterTextParser}, supporting only simple operators referring
  * to the content of a single column.<br>
- * The supporter operators include:<ul>
- * <li>Comparison operators. The comparison is done on the parsed object, not on the string 
- * representation, unless no {@link Format} or {@link Comparator} is defined for the given type.
- * For example, specifying the text &quot;&gt;= 4&quot; implies, for a column with integer types,
- * that a direct comparison between integers will be performed. These operators are:<ul>
- * <li>&gt;=</li>
- * <li>&gt;</li>
- * <li>&lt;</li>
- * <li>&lt;=</li>
- * <li>&gt;&lt;</li></ul></li>
- * <li>Equal operators. The comparison is done on the parsed object, not on the string 
- * representation, unless no {@link Format} is defined for the given type. The comparison is
- * performed using the equals method. These operators are:<ul>
- * <li>!=: note that, in most cases, it will behave as the operator &gt;&lt;</li>
- * <li>! : equivalent to !=</li>
- * <li>&lt;</li>
- * <li>=</li>
- * <li>==: equivalent to =</li></ul></li>
- * <li>Basic wildcard operators. These operators work using the string representation of the
- * types (using, when possible, the defined {@link Format} instance. Only two wildcard characters
- * are defined: * and ?<ul>
- * <li>~: for example ~ *vadis* will filter in all expressions including the substring vadis</li>
- * <li>!~: negates the previous operator</li></ul></li>
- * <li>Regular expression operator. There is only one such operator: ~~, accepting a java regular
- * expression.</li>
+ * The supporter operators include:
+ *
+ * <ul>
+ *   <li>Comparison operators. The comparison is done on the parsed object, not on the string
+ *     representation, unless no {@link Format} or {@link Comparator} is defined for the given type.
+ *     For example, specifying the text &quot;&gt;= 4&quot; implies, for a column with integer
+ *     types, that a direct comparison between integers will be performed. These operators are:
+ *
+ *     <ul>
+ *       <li>&gt;=</li>
+ *       <li>&gt;</li>
+ *       <li>&lt;</li>
+ *       <li>&lt;=</li>
+ *       <li>&lt;&gt;</li>
+ *     </ul>
+ *   </li>
+ *   <li>Equal operators. The comparison is done on the parsed object, not on the string
+ *     representation, unless no {@link Format} is defined for the given type. The comparison is
+ *     performed using the equals method. These operators are:
+ *
+ *     <ul>
+ *       <li>!=: note that, in most cases, it will behave as the operator &lt;&gt;</li>
+ *       <li>! : equivalent to !=</li>
+ *       <li>&lt;</li>
+ *       <li>=</li>
+ *       <li>==: equivalent to =</li>
+ *     </ul>
+ *   </li>
+ *   <li>Basic wildcard operators. These operators work using the string representation of the types
+ *     (using, when possible, the defined {@link Format} instance). Only two wildcard characters are
+ *     defined: * and ?
+ *
+ *     <ul>
+ *       <li>~: for example ~ *vadis* will filter in all expressions including the substring
+ *         vadis</li>
+ *       <li>!~: negates the previous operator</li>
+ *     </ul>
+ *   </li>
+ *   <li>Regular expression operator. There is only one such operator: ~~, accepting a java regular
+ *     expression.</li>
  * </ul>
  */
 public class FilterTextParser implements IFilterTextParser {
@@ -70,32 +85,27 @@ public class FilterTextParser implements IFilterTextParser {
         operands.put("=", new EqualOperand(true));
         operands.put("==", new EqualOperand(true));
         operands.put(">=", new ComparisonOperand() {
-                @Override
-                boolean matches(int comparison) {
+                @Override boolean matches(int comparison) {
                     return comparison >= 0;
                 }
             });
         operands.put(">", new ComparisonOperand() {
-                @Override
-                boolean matches(int comparison) {
+                @Override boolean matches(int comparison) {
                     return comparison > 0;
                 }
             });
         operands.put("<=", new ComparisonOperand() {
-                @Override
-                boolean matches(int comparison) {
+                @Override boolean matches(int comparison) {
                     return comparison <= 0;
                 }
             });
         operands.put("<", new ComparisonOperand() {
-                @Override
-                boolean matches(int comparison) {
+                @Override boolean matches(int comparison) {
                     return comparison < 0;
                 }
             });
         operands.put("<>", new ComparisonOperand() {
-                @Override
-                boolean matches(int comparison) {
+                @Override boolean matches(int comparison) {
                     return comparison != 0;
                 }
             });
@@ -189,7 +199,9 @@ public class FilterTextParser implements IFilterTextParser {
             }
         };
 
-    /** Internal interface, to be implemented by all operands */
+    /**
+     * Internal interface, to be implemented by all operands
+     */
     interface IOperand {
         RowFilter create(String right,
                          Class<?> c,
@@ -233,8 +245,7 @@ public class FilterTextParser implements IFilterTextParser {
                                            final int modelPosition) {
             return new RowFilter() {
                     @SuppressWarnings("unchecked")
-                    @Override
-                    public boolean include(Entry entry) {
+                    @Override public boolean include(Entry entry) {
                         Object left = entry.getValue(modelPosition);
                         return (left != null) && matches(comparator.compare(left, right));
                     }
@@ -245,8 +256,7 @@ public class FilterTextParser implements IFilterTextParser {
                                                  Format formatter,
                                                  int modelPosition) {
             return new StringRowFilter(modelPosition, formatter) {
-                    @Override
-                    public boolean include(String left) {
+                    @Override public boolean include(String left) {
                         return matches(ignoreCase ? left.compareToIgnoreCase(right) : left.compareTo(right));
                     }
                 };
@@ -261,8 +271,7 @@ public class FilterTextParser implements IFilterTextParser {
             defaultComparator = this;
         }
 
-        @Override
-        public boolean matches(int comparison) {
+        @Override public boolean matches(int comparison) {
             return equals == (comparison == 0);
         }
 
@@ -288,8 +297,7 @@ public class FilterTextParser implements IFilterTextParser {
             Format format = String.class.equals(c) ? null : formatters.get(c);
             return new StringRowFilter(modelPosition, format) {
 
-                    @Override
-                    boolean include(String left) {
+                    @Override boolean include(String left) {
                         return equals == pattern.matcher(left).matches();
                     }
                 };
@@ -310,8 +318,7 @@ public class FilterTextParser implements IFilterTextParser {
             super(equals);
         }
 
-        @Override
-        protected Pattern getPattern(String right) throws ParseException {
+        @Override protected Pattern getPattern(String right) throws ParseException {
             return super.getPattern(convertWilcardExpressionToRegularExpression(right));
         }
 
@@ -393,8 +400,7 @@ public class FilterTextParser implements IFilterTextParser {
 
         }
 
-        @Override
-        public boolean include(Entry entry) {
+        @Override public boolean include(Entry entry) {
             Object o = entry.getValue(modelPosition);
             String left = (o == null) ? "" : ((formatter == null) ? o.toString() : formatter.format(o));
             return include(left);

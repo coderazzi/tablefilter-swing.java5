@@ -28,8 +28,6 @@ package net.coderazzi.filters;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.coderazzi.filters.artifacts.RowFilter;
-
 
 /**
  * <p>Abstract parent class to support the composition of multiple filters.</p>
@@ -89,7 +87,7 @@ abstract public class ComposedFilter extends BaseFilter implements IFilterObserv
     }
 
     /**
-     * @see  IFilterObserver#filterUpdated(IFilter, RowFilter)
+     * @see  IFilterObserver#filterUpdated(IFilter)
      */
     public void filterUpdated(IFilter producer) {
         reportFilterUpdatedToObservers();

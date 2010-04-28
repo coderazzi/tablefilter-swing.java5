@@ -47,9 +47,12 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import net.coderazzi.filters.UserFilter;
+import net.coderazzi.filters.artifacts.TableModelFilter;
 import net.coderazzi.filters.examples.utils.CenteredRenderer;
 import net.coderazzi.filters.examples.utils.EventsWindow;
 import net.coderazzi.filters.examples.utils.FlagRenderer;
@@ -71,6 +74,7 @@ public class TableFilterExample extends JFrame {
     JPanel tablePanel;    
     JPanel filterHeaderPanel;
     TableFilterHeader filterHeader;
+    TableSorter tableSorter; //Java 5 change
     
     
     public TableFilterExample() {
@@ -82,7 +86,25 @@ public class TableFilterExample extends JFrame {
     
     private JPanel createGui(){
     	tableModel = TestTableModel.createTestTableModel();
-    	table = new JTable(tableModel);
+        // >>special difference with Java 6
+        // instead of table = new JTable(tableModel);
+        table = new JTable();
+        tableSorter = new TableSorter(tableModel, table.getTableHeader());
+        table.setModel(tableSorter);
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    // added the listener to show how to make model's coordinates translations
+                    if (!e.getValueIsAdjusting()) {
+                        int selected = table.getSelectedRow();
+                        if (selected != -1) {
+                            int model = ((TableModelFilter) table.getModel()).convertRowIndexToModel(selected);
+                            JOptionPane.showMessageDialog(TableFilterExample.this,
+                                                          "Selected: " + tableModel.getRow(tableSorter.modelIndex(model)).name);
+                        }
+                    }
+                }
+            });
+        // <<<
     	tablePanel = new JPanel(new BorderLayout());
     	tablePanel.add(new JScrollPane(table), BorderLayout.CENTER);
     	tablePanel.setBorder(BorderFactory.createCompoundBorder(BorderFactory.createLoweredBevelBorder(),
@@ -155,7 +177,9 @@ public class TableFilterExample extends JFrame {
 		tableMenu.add(new JMenuItem(new AbstractAction("Use new model") {			
 			public void actionPerformed(ActionEvent e) {
             	tableModel = TestTableModel.createTestTableModel();
-                table.setModel(tableModel);
+                // >>special difference with Java 6
+                // instead of table.setModel(tableModel);
+                tableSorter.setTableModel(tableModel);
                 customizeTable();
                 removeElement.setEnabled(true);
 			}

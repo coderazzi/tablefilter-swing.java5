@@ -5,16 +5,16 @@
     <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
     <selectedProjects/>
     <selectedElements exportClassFiles="false" exportJavaFiles="true" exportOutputFolder="false">
+        <file path="/TableFilter_Java5/example.jardesc"/>
         <file path="/TableFilter_Java5/example"/>
-        <javaElement handleIdentifier="=TableFilter_Java5/src"/>
-        <file path="/TableFilter_Java5/javadoc.xml"/>
-        <file path="/TableFilter_Java5/MANIFEST.MF"/>
-        <file path="/TableFilter_Java5/source.jardesc"/>
-        <file path="/TableFilter_Java5/.classpath"/>
         <file path="/TableFilter_Java5/jar.jardesc"/>
         <file path="/TableFilter_Java5/jarDbg.jardesc"/>
-        <javaElement handleIdentifier="=TableFilter_Java5/tests"/>
+        <file path="/TableFilter_Java5/source.jardesc"/>
+        <file path="/TableFilter_Java5/javadoc.xml"/>
+        <file path="/TableFilter_Java5/MANIFEST.MF"/>
+        <file path="/TableFilter_Java5/.classpath"/>
         <file path="/TableFilter_Java5/.project"/>
-        <file path="/TableFilter_Java5/example.jardesc"/>
+        <javaElement handleIdentifier="=TableFilter_Java5/src"/>
+        <javaElement handleIdentifier="=TableFilter_Java5/examples"/>
     </selectedElements>
 </jardesc>

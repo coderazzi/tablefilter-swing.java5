@@ -362,10 +362,8 @@ public class TableFilterHeader extends JPanel {
     }
 
     /**
-     * <p>Sets the foreground color used by the parsing text editors when there are error on the
-     * filter expressions.</p>
-     *
-     * @see  ITableFilterTextBasedEditor#setErrorForeground(Color)
+     * Sets the foreground color used by the parsing text editors when there are error on the
+     * filter expressions.
      */
     public void setErrorForeground(Color fg) {
         this.errorColor = fg;
