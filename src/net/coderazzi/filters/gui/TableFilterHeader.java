@@ -204,11 +204,19 @@ public class TableFilterHeader extends JPanel {
         }
         else{
             if (!backgroundSet){
-            	setBackground(table.getTableHeader().getBackground());
+            	Color background = FilterSettings.headerBackground;
+            	if (background==null){
+            		background =table.getTableHeader().getBackground(); 
+            	}
+            	setBackground(background);
             	backgroundSet=false;
             }
             if (!foregroundSet){
-            	setForeground(table.getTableHeader().getForeground());
+            	Color foreground = FilterSettings.headerForeground;
+            	if (foreground==null){
+            		foreground =table.getTableHeader().getForeground(); 
+            	}
+            	setForeground(foreground);
             	foregroundSet=false;
             }
             if (!disabledSet){
@@ -400,7 +408,7 @@ public class TableFilterHeader extends JPanel {
     /** Creates an editor for the given column, customized to the associated type */
     FilterEditor createEditor(int modelColumn) {
         
-        FilterEditor ret =  new FilterEditor();
+        FilterEditor ret = FilterSettings.newFilterEditor();
         ret.setFormat(getTextParser().getFormat(table.getModel().getColumnClass(modelColumn)));
         ret.setTextParser(getTextParser());
         ret.setFilterPosition(modelColumn);

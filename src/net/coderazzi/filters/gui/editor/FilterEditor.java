@@ -962,6 +962,8 @@ public class FilterEditor extends JComponent{
 	    	List<Object> all = new ArrayList<Object>();
             int column = getFilterPosition();
 
+            lastRow = Math.min(tableModel.getRowCount() - 1, lastRow);
+
             while (lastRow >= firstRow) {
                 all.add(tableModel.getValueAt(firstRow++, column));
             }

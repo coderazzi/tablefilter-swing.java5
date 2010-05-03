@@ -25,8 +25,11 @@
 
 package net.coderazzi.filters.gui;
 
+import java.awt.Color;
+
 import net.coderazzi.filters.IFilterTextParser;
 import net.coderazzi.filters.gui.TableFilterHeader.Position;
+import net.coderazzi.filters.gui.editor.FilterEditor;
 import net.coderazzi.filters.parser.FilterTextParser;
 
 
@@ -62,6 +65,11 @@ public class FilterSettings {
     /** The maximum size of the history when no options are present */
     public static int maxPopupHistory = getInteger("Popup.maxHistory", 2);
     
+    /** The color of the header background */
+    public static Color headerBackground = null;
+
+    /** The color of the header foreground */
+    public static Color headerForeground = null;
 
     /**
      * The class to handle the text parsing by default. It must have a default constructor. It
@@ -69,10 +77,21 @@ public class FilterSettings {
      */
     public static Class<? extends IFilterTextParser> filterTextParserClass;
 
+    /** The class implementing the {@link FilterEditor} */
+    public static Class<? extends FilterEditor> filterEditorClass;
 
-    /**
-     * Creates a TextParser as defined by default
-     */
+
+    /** Creates a FilterEditor as defined by default */
+    public static FilterEditor newFilterEditor() {
+        try {
+        	return filterEditorClass.newInstance();
+        } catch (Exception ex) {
+            throw new RuntimeException("Error creating filter editor of type "
+                                       + filterEditorClass, ex);
+        }
+    }
+
+    /** Creates a TextParser as defined by default */
     public static IFilterTextParser newTextParser() {
         try {
             IFilterTextParser ret = filterTextParserClass.newInstance();
@@ -96,6 +115,18 @@ public class FilterSettings {
             } catch (ClassCastException cce) {
                 throw new RuntimeException("Filter text parser of class " + cl
                                            + " is not a valid IFilterTextParser class");
+            }
+        }
+        filterEditorClass = FilterEditor.class;
+        cl = getString("FilterEditor.class", null);
+        if (cl != null) {
+            try {
+            	filterEditorClass = (Class<? extends FilterEditor>) Class.forName(cl);
+            } catch (ClassNotFoundException cne) {
+                throw new RuntimeException("Error finding filter editor of class " + cl, cne);
+            } catch (ClassCastException cce) {
+                throw new RuntimeException("Filter editor of class " + cl
+                                           + " is not a valid FilterEditor class");
             }
         }
     }
