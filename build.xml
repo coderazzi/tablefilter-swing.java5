@@ -1,0 +1,87 @@
+<?xml version='1.0'?>
+<project name='TableFilter' default='all' basedir='.'>	
+	
+	<property name="version" value="3.0.1"/>
+
+	<target name='all' depends='bin, debug, src'/>
+
+	<target name='bin' depends='prepare'>
+		<delete dir='build/net'/>
+		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5' debug='off'/>
+		<jar destfile='build/tablefilter5-v${version}.jar'> 
+			<fileset dir='build'
+				     includes='net/coderazzi/filters/**/*.class'
+				     excludes='net/coderazzi/filters/examples/**'/>
+			<fileset dir='src'
+				     includes='net/coderazzi/filters/resources/*'/>
+			<manifest>
+			      <attribute name="Created-By" value="lu@coderazzi.net"/>
+			      <attribute name="Implementation-Vendor" value="coderazzi"/>
+			      <attribute name="Implementation-Title" value="TableFilter"/>
+			      <attribute name="Implementation-Version" value="${version}"/>
+			      <section name="net/coderazzi/filters/gui/TableFilterHeader.class">
+			      	<attribute name="Java-Bean" value="true"/>
+			      </section>
+			      <section name="net/coderazzi/filters/gui/editor/FilterEditor.class">
+			      	<attribute name="Java-Bean" value="true"/>
+			      </section>
+			</manifest>
+		</jar>
+		<delete dir='build/net'/>
+	</target>
+
+	<target name='debug' depends='prepare'>
+		<delete dir='build/net'/>
+		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5'/>
+		<jar destfile='build/tablefilterDbg5-v${version}.jar'>
+			<fileset dir='build'
+				 includes='net/coderazzi/filters/**/*.class'
+				 excludes='net/coderazzi/filters/examples/**'/>
+			<fileset dir='src'/>
+			<manifest>
+			      <attribute name="Created-By" value="lu@coderazzi.net"/>
+			      <attribute name="Implementation-Vendor" value="coderazzi"/>
+			      <attribute name="Implementation-Title" value="TableFilter for Java 5- Dbg"/>
+			      <attribute name="Implementation-Version" value="${version}"/>
+			      <section name="net/coderazzi/filters/gui/TableFilterHeader.class">
+			      	<attribute name="Java-Bean" value="true"/>
+			      </section>
+			      <section name="net/coderazzi/filters/gui/editor/FilterEditor.class">
+			      	<attribute name="Java-Bean" value="true"/>
+			      </section>
+			</manifest>
+		</jar>
+		<delete dir='build/net'/>
+	</target>
+
+	<target name='src' depends='prepare'>
+		<zip destfile='build/tablefilter5-v${version}.zip'> 
+			<fileset dir='.'
+				     excludes='build/**, bin/**, doc/api/**, doc/api5/**'/>
+		</zip>
+	</target>
+
+	<target name='prepare' >
+		<mkdir dir='build'/>
+	</target>
+
+	<target name='javadoc'>
+		<delete dir='doc/api'/>
+	    <javadoc access="protected" 
+	    	     author="true" 
+	    	     destdir="doc/api5" 
+	    	     doctitle="TableFilter for Java 5" 
+	    	     nodeprecated="false" 
+	    	     nodeprecatedlist="false" 
+	    	     noindex="false" 
+	    	     nonavbar="false" 
+	    	     notree="false" 
+	    	     source="1.5" 
+	    	     sourcepath="src" 
+	    	     splitindex="true" 
+	    	     use="true" 
+	    	     version="true">
+	        <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
+	    </javadoc>
+	</target>
+</project>	

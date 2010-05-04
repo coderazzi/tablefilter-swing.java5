@@ -57,7 +57,6 @@ import net.coderazzi.filters.IFilterObserver;
 import net.coderazzi.filters.IFilterTextParser;
 import net.coderazzi.filters.TableFilter;
 import net.coderazzi.filters.gui.editor.FilterEditor;
-import net.coderazzi.filters.parser.Types;
 
 
 /**
@@ -204,11 +203,7 @@ public class TableFilterHeader extends JPanel {
         }
         else{
             if (!backgroundSet){
-            	Color background = FilterSettings.headerBackground;
-            	if (background==null){
-            		background =table.getTableHeader().getBackground(); 
-            	}
-            	setBackground(background);
+            	setBackground(suggestBackground());
             	backgroundSet=false;
             }
             if (!foregroundSet){
@@ -236,6 +231,19 @@ public class TableFilterHeader extends JPanel {
             this.table.addComponentListener(resizer);
             getTextParser().setTableModel(table.getModel());
         }
+    }
+    
+    /** Suggests a background color, unless there is already one defined **/
+    private Color suggestBackground(){
+    	Color background = FilterSettings.headerBackground;
+    	if (background==null){
+    		Color header = table.getTableHeader().getBackground();
+    		Color cells = table.getBackground();
+    		background = new Color((header.getRed() + cells.getRed())/2,
+    				(header.getGreen() + cells.getGreen())/2,
+    				(header.getBlue() + cells.getBlue())/2);
+    	}
+    	return background;
     }
 
     /** Returns the table currently attached */
@@ -523,7 +531,6 @@ public class TableFilterHeader extends JPanel {
     public IFilterTextParser getTextParser() {
         if (filterTextParser == null) {
             filterTextParser = FilterSettings.newTextParser();
-    		Types.configure(filterTextParser);
             if (table != null){
                 filterTextParser.setTableModel(table.getModel());
             }

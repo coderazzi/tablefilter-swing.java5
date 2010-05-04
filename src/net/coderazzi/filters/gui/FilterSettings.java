@@ -31,6 +31,7 @@ import net.coderazzi.filters.IFilterTextParser;
 import net.coderazzi.filters.gui.TableFilterHeader.Position;
 import net.coderazzi.filters.gui.editor.FilterEditor;
 import net.coderazzi.filters.parser.FilterTextParser;
+import net.coderazzi.filters.parser.Types;
 
 
 /**
@@ -71,6 +72,9 @@ public class FilterSettings {
     /** The color of the header foreground */
     public static Color headerForeground = null;
 
+    /** The types used by default on the parser */
+    public static Types types = new Types();
+
     /**
      * The class to handle the text parsing by default. It must have a default constructor. It
      * corresponds to the property TextParser.class
@@ -97,6 +101,7 @@ public class FilterSettings {
             IFilterTextParser ret = filterTextParserClass.newInstance();
             ret.setIgnoreCase(ignoreCase);
             ret.setDefaultOperator(defaultOperator);
+            types.configure(ret);
             return ret;
         } catch (Exception ex) {
             throw new RuntimeException("Error creating filter text parser of type "
@@ -146,5 +151,6 @@ public class FilterSettings {
 		} catch (Exception ex) {
 			return defaultValue;
 		}
-}
+    }
+       
 }

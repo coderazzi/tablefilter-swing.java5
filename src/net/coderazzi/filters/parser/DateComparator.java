@@ -91,7 +91,7 @@ abstract class DateComparator implements Comparator<Date>{
 			return 1;
 		}
 		long diff = diff(o1, o2);
-		return diff==0? 0 : diff>1? 1 : -1;
+		return diff==0? 0 : diff>0? 1 : -1;
 	}
 	public abstract long diff(Date o1, Date o2);
 

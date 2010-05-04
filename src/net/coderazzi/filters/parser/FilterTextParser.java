@@ -5,6 +5,7 @@ import java.beans.PropertyChangeSupport;
 import java.text.Format;
 import java.text.ParseException;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -147,6 +148,12 @@ public class FilterTextParser implements IFilterTextParser {
                           Format format) {
         Format old = formatters.put(c, format);
         propertiesHandler.firePropertyChange("format", old, format);
+        if (Date.class.isAssignableFrom(c) && (format != null)) {
+            Comparator<?> comparator = getComparator(c);
+            if ((comparator == null) || (comparator instanceof DateComparator)) {
+                setComparator(c, DateComparator.getDateComparator(format));
+            }
+        }
     }
 
     public void setComparator(Class<?> c,
