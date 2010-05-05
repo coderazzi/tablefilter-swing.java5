@@ -6,7 +6,7 @@
 	<target name='all' depends='bin, debug, src'/>
 
 	<target name='bin' depends='prepare'>
-		<delete dir='build/net'/>
+		<delete dir='${javacoutput}'/>
 		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5'/>
 		<jar destfile='build/tablefilter5-v${version}.jar'> 
 			<fileset dir='build'
@@ -27,11 +27,11 @@
 			      </section>
 			</manifest>
 		</jar>
-		<delete dir='build/net'/>
+		<delete dir='${javacoutput}'/>
 	</target>
 
 	<target name='debug' depends='prepare'>
-		<delete dir='build/net'/>
+		<delete dir='${javacoutput}'/>
 		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5'  debug='true'/>
 		<jar destfile='build/tablefilterDbg5-v${version}.jar'>
 			<fileset dir='build'
@@ -51,7 +51,7 @@
 			      </section>
 			</manifest>
 		</jar>
-		<delete dir='build/net'/>
+		<delete dir='${javacoutput}'/>
 	</target>
 
 	<target name='src' depends='prepare'>
@@ -63,6 +63,7 @@
 
 	<target name='prepare' >
 		<mkdir dir='build'/>
+		<property name='javacoutput' value="build/net"/>
 	</target>
 
 	<target name='javadoc'>
@@ -83,5 +84,6 @@
 	    	     version="true">
 	        <link href="http://java.sun.com/j2se/1.5.0/docs/api/"/>
 	    </javadoc>
+		<zip destfile='build/doc_api5.zip' basedir="doc" includes='api5/**/*'/> 
 	</target>
 </project>	

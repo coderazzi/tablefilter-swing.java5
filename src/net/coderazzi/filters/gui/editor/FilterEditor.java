@@ -137,7 +137,7 @@ public class FilterEditor extends JComponent{
 	/**
 	 * Limits the history size. <br>
 	 * This limit is only used when the popup contains also options. Otherwise, the
-	 * maximum history size corresponds to the maximum number of visible rows ({@link PopupComponent#setMaxVisibleRows(int)}<br>
+	 * maximum history size corresponds to the maximum number of visible rows<br>
 	 */
 	public void setMaxHistory(int size) {
 		popup.setMaxHistory(size);

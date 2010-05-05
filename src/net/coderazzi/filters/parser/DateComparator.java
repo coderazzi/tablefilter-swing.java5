@@ -33,7 +33,7 @@ import java.util.Date;
 /**
  * Class to deduce a sensible {@link Comparator} for {@link Date} instances.<br>
  */
-abstract class DateComparator implements Comparator<Date>{
+abstract public class DateComparator implements Comparator<Date>{
 	/**
 	 * Factory constructor, returning an instance suitable for the given format.
 	 */
