@@ -7,7 +7,7 @@
 
 	<target name='bin' depends='prepare'>
 		<delete dir='build/net'/>
-		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5' debug='off'/>
+		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5'/>
 		<jar destfile='build/tablefilter5-v${version}.jar'> 
 			<fileset dir='build'
 				     includes='net/coderazzi/filters/**/*.class'
@@ -32,7 +32,7 @@
 
 	<target name='debug' depends='prepare'>
 		<delete dir='build/net'/>
-		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5'/>
+		<javac srcdir='src' destdir='build' includes='**/*.java' source='1.5'  debug='true'/>
 		<jar destfile='build/tablefilterDbg5-v${version}.jar'>
 			<fileset dir='build'
 				 includes='net/coderazzi/filters/**/*.class'

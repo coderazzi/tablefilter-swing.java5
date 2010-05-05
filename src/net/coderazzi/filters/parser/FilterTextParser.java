@@ -144,6 +144,12 @@ public class FilterTextParser implements IFilterTextParser {
         return formatters.get(c);
     }
 
+    /**
+     * Sets the {@link Format} for the given Class. If the class belongs to
+     * the {@link Date} hierarchy, it creates automatically a {@link Comparator}
+     * for it, based on the {@link DateComparator} class, unless one
+     * comparator has been already set.
+     */
     public void setFormat(Class<?> c,
                           Format format) {
         Format old = formatters.put(c, format);
